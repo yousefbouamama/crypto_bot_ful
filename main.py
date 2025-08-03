@@ -18,6 +18,20 @@ async def lifespan(app: FastAPI):
     # إبقاء السيرفر نشطًا حتى لو المهام تنتهي
     try:
         await asyncio.Event().wait()  # حلقة انتظار غير منتهية
+    except asyncio.CancelledError:
+        bot_task.cancel()
+        signal_task.cancel()
+        print("❌ تم إيقاف المهام.")
+        raise
+
+# ✅ إنشاء التطبيق
+app = FastAPI(lifespan=lifespan)
+
+# ✅ مسار رئيسي للتأكد أن الخدمة تعمل (Health Check)
+@app.get("/", response_class=PlainTextResponse)
+async def health_check():
+    return "Bot is running on Render 🚀"
+    
         yield
     finally:
         bot_task.cancel()
@@ -33,4 +47,5 @@ async def home():
 @app.get("/")
 async def home():
     return PlainTextResponse("✅ Bot and Signal Manager are running on Railway!")
+
 
