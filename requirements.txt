@@ -1,6 +1,5 @@
 python-telegram-bot==13.15
 ccxt==4.1.83
-pandas==1.5.3
 ta==0.11.0
 Flask==3.0.3
 openai==1.30.1
@@ -8,4 +7,5 @@ requests==2.32.3
 gunicorn
 fastapi
 uvicorn
+
 
