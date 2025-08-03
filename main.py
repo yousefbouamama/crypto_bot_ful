@@ -17,7 +17,6 @@ async def lifespan(app: FastAPI):
     try:
         yield
     finally:
-        # إلغاء المهام عند إيقاف السيرفر
         bot_task.cancel()
         signal_task.cancel()
         print("🛑 تم إيقاف المهام.")
@@ -27,3 +26,4 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 async def home():
     return PlainTextResponse("✅ Bot and Signal Manager are running on Railway!")
+
