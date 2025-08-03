@@ -26,4 +26,3 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 async def home():
     return PlainTextResponse("✅ Bot and Signal Manager are running on Railway!")
-
