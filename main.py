@@ -14,7 +14,10 @@ async def lifespan(app: FastAPI):
     signal_task = loop.create_task(run_signal_loop())
 
     print("✅ المهام بدأت في الخلفية.")
+
+    # إبقاء السيرفر نشطًا حتى لو المهام تنتهي
     try:
+        await asyncio.Event().wait()  # حلقة انتظار غير منتهية
         yield
     finally:
         bot_task.cancel()
@@ -26,3 +29,8 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 async def home():
     return PlainTextResponse("✅ Bot and Signal Manager are running on Railway!")
+
+@app.get("/")
+async def home():
+    return PlainTextResponse("✅ Bot and Signal Manager are running on Railway!")
+
